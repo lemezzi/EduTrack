@@ -1,0 +1,241 @@
+<%-include('parts/top.ejs')%>
+
+<style>
+/* Chat container styles */
+.chat-container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 300px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Message list styles */
+.message-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Individual message item styles */
+.message-list li {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+}
+
+/* Form styles */
+.message-form {
+    display: flex;
+    margin-top: 10px;
+}
+
+.message-input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.send-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    padding: 12px; /* Adjust size as needed */
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-button i {
+    color: white;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}
+
+/* Close button styles */
+.close-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    padding: 10px; /* Adjust size as needed */
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button i {
+    color: white;
+}
+
+.close-button:hover {
+    background-color: #c82333;
+}
+
+/* Toggle button styles */
+#toggleChatButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    padding: 16px; /* Adjust size as needed */
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toggleChatButton:hover {
+    background-color: #218838;
+}
+
+/* FontAwesome icons */
+.fa {
+    font-size: inherit;
+}
+</style>
+
+<div class="container">
+<br><br><br><br><br>
+  <table class="table table-dark">
+    <thead>
+     
+      <tr>
+        <th scope="col">Num</th>
+
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Email</th>
+        <th scope="col">Cin</th>
+        <th scope="col">class</th>
+        <th scope="col">Action</th>
+
+      </tr>
+
+    </thead>
+    <tbody>
+      <% let cpt = 1; %>
+<% for(let student of students) { %>
+  <tr>
+    <td><%= cpt %></td>
+    <td><%= student.first %></td>
+    <td><%= student.last %></td>
+    <td><%= student.email %></td>
+    <td><%= student.cin %></td>
+    <td><%= student.classe %></td>
+    <td>
+      <a href="/deleteetudi/<%= student._id %>"><button type="button" class="btn btn-danger">Delete</button></a>
+      <a href="/updateetudiant/<%= student._id %>"><button type="button" class="btn btn-primary">Update</button></a>
+      <a href="/annoterstudent/<%= student._id %>/<%= student.classe %>"><button type="button" class="btn btn-success">Annoter</button></a>
+
+    </td>
+  </tr>
+  <% cpt++; %>
+<% } %>
+
+      
+
+      
+    </tbody>
+  </table>
+
+
+</div>
+
+<button id="toggleChatButton">
+  <i class="fas fa-comments"></i> <!-- Chat Icon -->
+</button>
+<div class="chat-container" id="chatContainer">
+  <button class="close-button" id="closeChatButton">
+      <i class="fas fa-times"></i> <!-- Close Icon -->
+  </button>
+  <ul id="messages" class="message-list"></ul>
+  <form id="form" class="message-form" action="">
+      <input id="input" class="message-input" autocomplete="off" />
+      <button type="submit" class="send-button">
+          <i class="fas fa-paper-plane"></i> <!-- Send Icon -->
+      </button>
+      <input type="hidden" value="<%=verif%>" id="verif">
+  </form>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+  var chatContainer = document.getElementById('chatContainer');
+  var toggleChatButton = document.getElementById('toggleChatButton');
+  var closeChatButton = document.getElementById('closeChatButton');
+
+  form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (input.value.trim() !== '') {
+          socket.emit('chat message', input.value, document.getElementById('verif').value);
+          input.value = '';
+      }
+  });
+
+  toggleChatButton.addEventListener('click', function() {
+      chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+  });
+
+  closeChatButton.addEventListener('click', function() {
+      chatContainer.style.display = 'none';
+  });
+
+  window.addEventListener('load', () => {
+      socket.emit('verification', document.getElementById('verif').value);
+  });
+
+  socket.on('chat message', function(msg, verif) {
+      var item = document.createElement('li');
+      item.textContent =msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+  });
+</script>
+<br><br><br><br><br>  <br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+
+
+  <%-include('parts/bottom.ejs')%>
+

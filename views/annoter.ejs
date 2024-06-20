@@ -1,0 +1,31 @@
+<%-include('parts/top.ejs')%>
+<br><br><br><br><br>
+
+ <div class="container">
+  <form action="/annoterfinal" method="post">
+    <% let subjectNames = []; %>
+    <% let subjectNotes = []; %>
+    <% let subjectCoeff = []; %>
+  
+    <% subjects.forEach((subject, index) => { %>
+      <% subjectNames.push([subject.name]); %>
+      <% subjectCoeff.push([subject.coeff]); %>
+      
+      <% subjectNotes.push([]); %> <!-- Initialiser une liste vide pour chaque sujet -->
+      <div class="mb-3">
+        <label for="note-<%= index %>" class="form-label"><%= subject.name %></label>
+        <input type="text" name="notes[<%= index %>]" class="form-control" id="note-<%= index %>" aria-describedby="emailHelp" multiple>
+      </div>
+    <% }) %>
+  
+    <input type="hidden" name="names" value="<%= subjectNames %>">
+    <input type="hidden" name="coeff" value="<%= subjectCoeff %>">
+
+    <input type="hidden" name="id" value="<%=id %>">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form> 
+    </div>
+
+ 
+
+<%-include('parts/bottom.ejs')%>

@@ -1,0 +1,45 @@
+<%-include('parts/top.ejs')%>
+<br><br><br><br><br>
+<div class="container">
+
+    <form method="POST" action="/addstudent" >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">First Name</label>
+          <input type="text"  name="first" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Last Name</label>
+          <input type="text" name="last" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Email</label>
+            <input type="email"  name="email"  class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Class</label>
+            <input type="text" name="classe" class="form-control" id="exampleInputPassword1">
+          </div>
+        
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Num Cin</label>
+            <input type="number" name="cin" class="form-control" id="exampleInputPassword1">
+          </div>
+       <% if(Smessage){  %>
+        <div class="alert alert-success" role="alert">
+
+          <%= (Smessage) %>
+        </div>
+        <% }  %>
+        <% if(Emessage){  %>
+        <div class="alert alert-danger" role="alert">
+          <%= (Emessage) %>
+        </div>
+        <% }  %>
+          
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+
+<%-include('parts/bottom.ejs')%>

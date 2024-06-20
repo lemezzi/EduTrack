@@ -1,0 +1,35 @@
+<%-include('parts/top.ejs')%>
+<br><br><br><br><br>
+<div class="container">
+
+    <form method="POST" action="/updatestudent/<%=id%>" >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">First Name</label>
+          <input type="text" value="<%=student[0].first%>" name="first" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Last Name</label>
+          <input type="text" name="last" value="<%=student[0].last%>" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Email</label>
+            <input type="email"  name="email" value="<%=student[0].email%>" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Class</label>
+            <input type="text" name="classe" value="<%=student[0].classe%>" class="form-control" id="exampleInputPassword1">
+          </div>
+        
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Num Cin</label>
+            <input type="number" name="cin" value="<%=student[0].cin%>" class="form-control" id="exampleInputPassword1">
+          </div>
+      
+          
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+
+<%-include('parts/bottom.ejs')%>

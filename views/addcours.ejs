@@ -1,0 +1,35 @@
+<%-include('parts/top.ejs')%>
+<br><br><br><br><br>
+<div class="container">
+
+    <form method="POST" action="/addcoursfinale" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Cours Title</label>
+          <input type="text"  name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Description</label>
+          <input type="text" name="description" class="form-control" id="exampleInputPassword1">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Classe</label>
+            <input type="text" name="classe" class="form-control" id="exampleInputPassword1">
+          </div>
+          
+        
+        
+    
+        <div class="mb-3">
+            <label class="form-label">Cours</label>
+            <input type="file" name="image" class="form-control" id="inputGroupFile02">
+        </div>
+       
+          
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+
+<%-include('parts/bottom.ejs')%>

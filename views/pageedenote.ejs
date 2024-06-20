@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>StoryStack</title>
+
+   
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="/css/owl.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+ 
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+
+    
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.ejs"> <h2>E<em>learning </em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                
+              </li> 
+                        
+                
+            
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#">Mes prof</a>
+              </li>
+           
+              <li class="nav-item">
+                <a class="nav-link" href="/mesnotesfinaux/<%= obj.id %>">Mes notes</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/coursetudiant">Mes cours</a>
+              </li>
+          
+            
+               
+              
+
+           
+
+             
+
+         
+
+            
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+              </li>
+
+             
+              
+
+
+              <form method="POST" action="/logout">
+
+                <button class="btn btn-danger">LogOut</button>
+              </form>
+      
+             
+
+
+            
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<style>
+ 
+.row{
+  margin-bottom:3em;
+}
+
+#header h1{
+  text-transform:uppercase;
+  font-weight:800;
+  color: #3e53a6;
+  margin-bottom: 0.85em;
+}
+
+#outer{
+  border: 1px solid #CCC;
+  width: 100vw;
+}
+
+thead{
+  background: #3e53a6;
+  color: #FFF;
+  height: 50px;
+  text-transform:uppercase;
+  padding-bottom: 1rem;
+}
+
+tfoot{
+  background: #3e53a6;
+  color: #FFF;
+  height: 50px;
+  text-transform:uppercase;
+  font-weight:800;
+}
+tr{
+  min-height: 100px;
+}
+
+.nomModule{
+  padding-top:1rem;
+}
+
+td{
+  padding:1rem;
+}
+
+input{
+  display:block;
+  border: none;
+  border-bottom:2px solid #CCC;
+  border-radius: 25px;
+  margin-left:auto;
+  margin-right:auto;
+  float:none;
+}
+
+.mainRow{
+  border-bottom:1px solid #EEE;
+}
+/*fix this shit*//*FIXED!*/
+.mainRow:nth-child(even){
+  background-color:#EEE;
+}
+
+.no-spinners {
+  -moz-appearance:textfield;
+  margin-left: auto;
+  margin-right: auto;
+  float:none;
+}
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.alter{
+  padding-left: 3em;
+  padding-right: auto;
+}
+
+#footer h3{
+  color: #3e53a6;
+  text-decoration:underline;
+  font-weight: bold;
+}
+</style>
+
+<div class="container" ng-app="myApp">
+  <div class="col-xs-12">
+    <div class="row text-center" id="header">
+      <h5>Vous trouvez ici votre moyenne ainsi que les notes que vous avez reçues :</h5>
+      
+    </div>
+    <div class="row">
+      <table id="outer" ng-controller="myController">
+        <!--Header Row-->
+        <thead class="table-header">
+          <tr>
+            <th class="text-center col-xs-2">Matières</th>
+            <th class="text-center col-xs-2">Note Module</th>
+            <th class="text-center col-xs-2">Coefficient</th>
+          </tr>
+        </thead>
+
+        <!--Insider rows-->
+        <tbody>
+          
+          <% for (let i = 0; i < obj.subject.length; i++) { %>
+          <tr class="mainRow" ng-repeat="mod in Mods">
+            <!--Titre module-->
+            
+            <!--Titres Matières-->
+        
+                  <td><%= obj.subject[i] %></td>              
+           
+           
+            
+            <!--Moyenne du module-->
+            <td class="text-center"><%= obj.notes[i] %></td>
+            <!--Coeff Module-->
+            <td class="text-center"><%= obj.coeff[i] %></td>
+          </tr>
+          <% } %>
+        
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" class="text-center">Moyenne Générale</td>
+            <td colspan="2" class="text-center"><%=moy%></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    
+   
+  </div>
+</div>
+<br><br><br><br><br>  <br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+
+
+  <%-include('parts/bottom.ejs')%>
+
